@@ -223,7 +223,38 @@ Dopo aver creato un nuovo database e aver importato lo schema allegato, eseguite
 
 8- Selezionare le città in cui è stato giocato il gioco dell'anno del 2018 (36)
 
+	SELECT t.city 
+	FROM tournaments t 
+		JOIN tournament_videogame tv 
+			ON t.id = tv.tournament_id 
+				JOIN videogames v 
+					ON tv.videogame_id = v.id 
+		JOIN award_videogame av 
+			ON v.id = av.videogame_id 
+				JOIN awards a 
+					ON av.award_id = a.id 
+	WHERE a.name LIKE "Gioco dell'anno"
+	AND av.`year` = 2018;
+
 9- Selezionare i giocatori che hanno giocato al gioco più atteso del 2018 in un torneo del 2019 (3306)
+
+	SELECT p.name 
+	FROM players p 
+		JOIN player_tournament pt 
+			ON p.id = pt.player_id 
+				JOIN tournaments t 
+					ON pt.tournament_id = t.id 
+		JOIN tournament_videogame tv 
+			ON t.id = tv.tournament_id 
+				JOIN videogames v 
+					ON tv.videogame_id = v.id 
+		JOIN award_videogame av 
+			ON v.id = av.videogame_id 
+				JOIN awards a 
+					ON av.award_id = a.id 
+	WHERE t.`year` = 2019
+	AND av.`year` = 2018
+	AND a.name LIKE "Gioco più atteso";
 
 
 #### Bonus
