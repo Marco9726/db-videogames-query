@@ -260,8 +260,35 @@ Dopo aver creato un nuovo database e aver importato lo schema allegato, eseguite
 #### Bonus
 10- Selezionare i dati della prima software house che ha rilasciato un gioco, assieme ai dati del gioco stesso (software house id : 5)
 
+	SELECT sh.*, v.*
+	FROM videogames v
+		JOIN software_houses sh 
+			ON v.software_house_id = sh.id 
+	ORDER BY v.release_date 
+	LIMIT 1 ;
+
 11- Selezionare i dati del videogame (id, name, release_date, totale recensioni) con più recensioni (videogame id : potrebbe uscire 449 o 398, sono entrambi a 20)
 
+	SELECT v.id, v.name, v.release_date, COUNT(v.id) as "totale recensioni"
+	FROM reviews r
+		JOIN videogames v 
+			ON r.videogame_id = v.id 
+	GROUP BY v.id
+	ORDER BY COUNT(v.id) DESC
+	LIMIT 1;
+
 12- Selezionare la software house che ha vinto più premi tra il 2015 e il 2016 (software house id : potrebbe uscire 3 o 1, sono entrambi a 3)
+
+	SELECT sh.id, sh.name, COUNT(sh.id) as "premi totali"
+	FROM award_videogame av 
+		JOIN videogames v 
+			ON av.videogame_id = v.id 
+		JOIN software_houses sh 
+			ON v.software_house_id = sh.id 
+	WHERE av.`year` = 2015
+	OR av.`year` = 2016
+	GROUP BY sh.id 
+	ORDER BY COUNT(sh.id) DESC
+	LIMIT 1;
 
 13- Selezionare le categorie dei videogame i quali hanno una media recensioni inferiore a 1.5 (10)
