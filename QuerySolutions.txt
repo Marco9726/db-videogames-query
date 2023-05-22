@@ -193,7 +193,7 @@ Dopo aver creato un nuovo database e aver importato lo schema allegato, eseguite
 
 7- Selezionare quali giochi erano presenti nei tornei nei quali hanno partecipato i giocatori il cui nome inizia per 'S' (474)
 
-	SELECT DISTINCT v.name 
+	SELECT DISTINCT v.id, v.name 
 	FROM tournaments t 
 		JOIN tournament_videogame tv 
 			ON t.id = tv.tournament_id 
@@ -204,22 +204,6 @@ Dopo aver creato un nuovo database e aver importato lo schema allegato, eseguite
 				JOIN players p 
 					ON pt.player_id = p.id 
 	WHERE p.name LIKE "S%";
-
-
-	SELECT DISTINCT v.name 
-	FROM tournament_videogame tv
-		JOIN videogames v 
-			ON tv.videogame_id = v.id 
-		JOIN tournaments t 
-			ON tv.tournament_id = t.id 
-				JOIN player_tournament pt 
-					ON t.id = pt.tournament_id 
-						JOIN players p 
-							ON pt.player_id = p.id 
-			
-	WHERE p.name LIKE "S%";
-
-	In entrambi i casi, il risultato è 473
 
 8- Selezionare le città in cui è stato giocato il gioco dell'anno del 2018 (36)
 
